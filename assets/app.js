@@ -119,9 +119,12 @@
     {
       name: 'VoxelBench',
       stack: 'Java · Next.js · TypeScript',
+      links: [
+        { href: 'https://voxelbench.com', label: { en: 'voxelbench.com', fr: 'voxelbench.com' } }
+      ],
       desc: {
-        en: 'A benchmarking platform for Minecraft servers: a Java plugin running instrumented workloads across Paper, Spigot and Folia, and a web app to collect and compare the runs.',
-        fr: "Plateforme de benchmark pour serveurs Minecraft : un plugin Java qui exécute des charges instrumentées sur Paper, Spigot et Folia, et une application web pour collecter et comparer les campagnes."
+        en: 'A benchmarking platform for Minecraft servers: a Java plugin running instrumented workloads across Paper, Spigot and Folia, and a web app that turns the runs into a public leaderboard, statistics and a hosting-provider comparison. The service is open to everyone; the source is what stays closed.',
+        fr: "Plateforme de benchmark pour serveurs Minecraft : un plugin Java qui exécute des charges instrumentées sur Paper, Spigot et Folia, et une application web qui transforme les campagnes en un classement public, des statistiques et une comparaison d’hébergeurs. Le service est ouvert à tous ; c’est le code qui reste fermé."
       }
     },
     {
@@ -168,7 +171,7 @@
       'featured.lede': 'Open source, built end to end — protocol, core, interface, packaging.',
       'more.title': 'More public work',
       'private.title': 'Also working on',
-      'private.lede': 'Not public, but a large share of the work.',
+      'private.lede': 'Source not public, but a large share of the work.',
       'private.tag': 'Private',
       'footer.repos': 'All repositories',
       'doc.title': 'Geoffrey Lecoq — Cross-platform desktop tools',
@@ -199,7 +202,7 @@
       'featured.lede': 'Open source, construits de bout en bout — protocole, cœur, interface, packaging.',
       'more.title': 'Autres projets publics',
       'private.title': 'En cours, côté privé',
-      'private.lede': 'Non publics, mais une bonne part du travail.',
+      'private.lede': 'Code non public, mais une bonne part du travail.',
       'private.tag': 'Privé',
       'footer.repos': 'Tous les dépôts',
       'doc.title': 'Geoffrey Lecoq — Outils desktop cross-platform',
@@ -252,11 +255,16 @@
 
     card.appendChild(el('p', 'card-desc', pick(project.desc, lang)));
 
+    card.appendChild(cardFoot(project.meta, project.links, lang));
+    return card;
+  }
+
+  function cardFoot(metaItems, links, lang) {
     var foot = el('div', 'card-foot');
-    foot.appendChild(metaList(project.meta));
-    if (project.links) {
+    foot.appendChild(metaList(metaItems));
+    if (links) {
       var extra = el('div', 'card-links');
-      project.links.forEach(function (item) {
+      links.forEach(function (item) {
         var anchor = el('a', null, pick(item.label, lang));
         anchor.href = item.href;
         anchor.rel = 'noopener';
@@ -264,8 +272,7 @@
       });
       foot.appendChild(extra);
     }
-    card.appendChild(foot);
-    return card;
+    return foot;
   }
 
   function privateCard(project, lang) {
@@ -277,7 +284,7 @@
     card.appendChild(head);
 
     card.appendChild(el('p', 'card-desc', pick(project.desc, lang)));
-    card.appendChild(metaList([project.stack]));
+    card.appendChild(cardFoot([project.stack], project.links, lang));
     return card;
   }
 
