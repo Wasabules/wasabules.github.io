@@ -1,6 +1,9 @@
 # wasabules.github.io
 
-Source of my portfolio — <https://wasabules.github.io>
+Source of my portfolio — <https://geoffrey-lecoq.fr>
+
+Served by GitHub Pages from this repository, on the custom domain declared in
+`CNAME`. The `wasabules.github.io` address redirects there.
 
 A static, dependency-free site: one HTML page, one stylesheet, one script.
 Nothing to build, nothing to install; GitHub Pages serves the files as they are.
