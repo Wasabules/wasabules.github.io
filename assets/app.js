@@ -2,11 +2,33 @@
 (function () {
   'use strict';
 
-  var GH = 'https://github.com/Wasabules/';
+  var GH = 'https://github.com/';
+  var DEFAULT_OWNER = 'Wasabules';
+
+  /* Sources polled once for live star counts, keyed by "owner/name". */
+  var STAR_SOURCES = [
+    'https://api.github.com/users/Wasabules/repos?per_page=100&type=owner',
+    'https://api.github.com/orgs/SnmpLens/repos?per_page=100'
+  ];
 
   /* ---------------------------------------------------------------- data */
 
   var FEATURED = [
+    {
+      repo: 'SnmpLens',
+      owner: 'SnmpLens',
+      stack: 'Go · Svelte · Wails',
+      meta: ['MIT', 'Windows', 'macOS', 'Linux'],
+      links: [
+        { href: 'https://snmplens.com/', label: { en: 'Website', fr: 'Site' } },
+        { href: 'https://snmplens.com/demo.html', label: { en: 'Live demo', fr: 'Démo en ligne' } },
+        { href: 'https://snmplens.com/documentation.html', label: { en: 'Docs', fr: 'Documentation' } }
+      ],
+      desc: {
+        en: 'A cross-platform SNMP MIB browser, MIB editor and monitoring application — an open-source alternative to iReasoning MIB Browser and Paessler SNMP Tester. SNMPv1/v2c/v3, a searchable MIB tree, an editor that reports unknown types and duplicate OIDs by line and column, dashboards drawn from shareable presets, polling charted as values, deltas, rates or latency, a trap receiver that resolves trap OIDs through your own MIBs, and alerts routed to syslog, a webhook or email. A built-in device simulator lets you try the whole thing without hardware.',
+        fr: "Navigateur de MIB, éditeur de MIB et application de supervision SNMP cross-platform — une alternative open source à iReasoning MIB Browser et Paessler SNMP Tester. SNMPv1/v2c/v3, arbre de MIB cherchable, éditeur qui signale types inconnus et OID dupliqués à la ligne et à la colonne près, tableaux de bord construits depuis des presets partageables, polling tracé en valeurs, deltas, taux ou latence, récepteur de traps qui résout les OID via vos propres MIB, et alertes routées vers syslog, un webhook ou un e-mail. Un simulateur d’équipements intégré permet de tout essayer sans matériel."
+      }
+    },
     {
       repo: 'SyslogStudio',
       stack: 'Go · Svelte · Wails',
@@ -215,12 +237,13 @@
 
   function repoCard(project, lang) {
     var card = el('article', 'card');
-    card.dataset.repo = project.repo;
+    var owner = project.owner || DEFAULT_OWNER;
+    card.dataset.repo = owner + '/' + project.repo;
 
     var head = el('div', 'card-head');
     var title = el('h3', 'card-title');
     var link = el('a', null, project.repo);
-    link.href = GH + project.repo;
+    link.href = GH + owner + '/' + project.repo;
     link.rel = 'noopener';
     title.appendChild(link);
     head.appendChild(title);
@@ -228,7 +251,20 @@
     card.appendChild(head);
 
     card.appendChild(el('p', 'card-desc', pick(project.desc, lang)));
-    card.appendChild(metaList(project.meta));
+
+    var foot = el('div', 'card-foot');
+    foot.appendChild(metaList(project.meta));
+    if (project.links) {
+      var extra = el('div', 'card-links');
+      project.links.forEach(function (item) {
+        var anchor = el('a', null, pick(item.label, lang));
+        anchor.href = item.href;
+        anchor.rel = 'noopener';
+        extra.appendChild(anchor);
+      });
+      foot.appendChild(extra);
+    }
+    card.appendChild(foot);
     return card;
   }
 
@@ -289,16 +325,20 @@
 
   function fetchStars() {
     if (!window.fetch) return;
-    fetch('https://api.github.com/users/Wasabules/repos?per_page=100&type=owner')
-      .then(function (response) {
-        return response.ok ? response.json() : Promise.reject(response.status);
-      })
-      .then(function (repos) {
-        stars = {};
-        repos.forEach(function (repo) { stars[repo.name] = repo.stargazers_count; });
-        applyStars();
-      })
-      .catch(function () { /* offline or rate-limited: the page stays as it is */ });
+    STAR_SOURCES.forEach(function (url) {
+      fetch(url)
+        .then(function (response) {
+          return response.ok ? response.json() : Promise.reject(response.status);
+        })
+        .then(function (repos) {
+          if (!stars) stars = {};
+          repos.forEach(function (repo) {
+            stars[repo.full_name] = repo.stargazers_count;
+          });
+          applyStars();
+        })
+        .catch(function () { /* offline or rate-limited: the page stays as it is */ });
+    });
   }
 
   /* ------------------------------------------------------------- startup */
