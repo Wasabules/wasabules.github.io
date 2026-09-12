@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geoffrey Lecoq — Cross-platform desktop tools</title>
+<meta name="description" content="I build cross-platform desktop tools — Go, Rust, Svelte — from the USB driver up to the UI. Reverse engineering, networking, security.">
+<meta name="author" content="Geoffrey Lecoq">
+<meta property="og:title" content="Geoffrey Lecoq">
+<meta property="og:description" content="Cross-platform desktop tools — Go, Rust, Svelte — from the USB driver up to the UI.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wasabules.github.io/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128295;</text></svg>">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">Geoffrey Lecoq</span>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#about" data-i18n="nav.about">About</a>
+      <a href="#featured" data-i18n="nav.projects">Projects</a>
+      <a href="#more" data-i18n="nav.more">More</a>
+      <a href="#private" data-i18n="nav.private">Private work</a>
+    </nav>
+    <div class="header-actions">
+      <button type="button" class="pill" id="lang-toggle" aria-label="Change language">
+        <span id="lang-label">FR</span>
+      </button>
+      <button type="button" class="pill" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero" id="top">
+    <div class="wrap">
+      <p class="eyebrow" data-i18n="hero.eyebrow">Developer · France</p>
+      <h1 class="hero-title">Geoffrey&nbsp;Lecoq</h1>
+      <p class="hero-tagline" data-i18n="hero.tagline">
+        I build cross-platform desktop tools — Go, Rust, Svelte — from the USB driver up to the UI.
+      </p>
+      <ul class="chips" aria-label="Stack">
+        <li>Go</li><li>Rust</li><li>C</li><li>Java</li>
+        <li>TypeScript</li><li>Svelte</li><li>Kotlin</li>
+      </ul>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://github.com/Wasabules" rel="noopener">
+          <span data-i18n="hero.cta.github">GitHub profile</span>
+        </a>
+        <a class="btn" href="#featured" data-i18n="hero.cta.projects">See the projects</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="wrap">
+      <h2 class="section-title" data-i18n="about.title">What I do</h2>
+      <div class="about-grid">
+        <div class="about-prose">
+          <p data-i18n="about.p1">
+            Most of my projects start the same way: a device or a service does something useful,
+            but the only way in is the vendor's own app. So I put the protocol on the wire, read it,
+            write the specification down, and build a free tool on top.
+          </p>
+          <p data-i18n="about.p2">
+            That usually means crossing the whole stack inside a single project — C for the driver,
+            Go or Rust for the core, Svelte for the interface, shipped as one cross-platform binary
+            through Wails or Tauri.
+          </p>
+        </div>
+        <ul class="skill-list">
+          <li>
+            <h3 data-i18n="about.s1.t">Reverse engineering</h3>
+            <p data-i18n="about.s1.d">USB (libusb), Bluetooth RFCOMM/SPP, GPS receivers, game-server APIs</p>
+          </li>
+          <li>
+            <h3 data-i18n="about.s2.t">Network &amp; security</h3>
+            <p data-i18n="about.s2.d">syslog over TLS, SNMPv3, 802.1X, PKI, X.509, at-rest encryption</p>
+          </li>
+          <li>
+            <h3 data-i18n="about.s3.t">Desktop &amp; mobile</h3>
+            <p data-i18n="about.s3.d">Wails, Tauri, Svelte, Kotlin / Jetpack Compose</p>
+          </li>
+          <li>
+            <h3 data-i18n="about.s4.t">Game servers</h3>
+            <p data-i18n="about.s4.d">Paper / Folia plugins, Fabric &amp; NeoForge mods, benchmarking</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="featured">
+    <div class="wrap">
+      <h2 class="section-title" data-i18n="featured.title">Featured projects</h2>
+      <p class="section-lede" data-i18n="featured.lede">
+        Open source, built end to end — protocol, core, interface, packaging.
+      </p>
+      <div class="cards" id="featured-cards"></div>
+    </div>
+  </section>
+
+  <section class="section" id="more">
+    <div class="wrap">
+      <h2 class="section-title" data-i18n="more.title">More public work</h2>
+      <div class="grid" id="more-cards"></div>
+    </div>
+  </section>
+
+  <section class="section" id="private">
+    <div class="wrap">
+      <h2 class="section-title" data-i18n="private.title">Also working on</h2>
+      <p class="section-lede" data-i18n="private.lede">
+        Not public, but a large share of the work.
+      </p>
+      <div class="grid grid-private" id="private-cards"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p class="footer-name">Geoffrey Lecoq</p>
+    <nav class="footer-links" aria-label="Links">
+      <a href="https://github.com/Wasabules" rel="noopener">GitHub</a>
+      <a href="https://github.com/Wasabules?tab=repositories" rel="noopener" data-i18n="footer.repos">All repositories</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
